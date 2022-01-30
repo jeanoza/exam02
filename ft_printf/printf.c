@@ -17,6 +17,11 @@ int ft_strlen(const char *str)
 
 void	ft_putnbr(int num, int *res)
 {
+	if (num == -2147483648)
+	{
+		*res += write(1, "-2147483648", 11);
+		return ;
+	}
 	if (num < 0)
 	{
 		*res += write(1, "-", 1);
@@ -61,7 +66,10 @@ int	ft_printf(const char *format, ...)
 			if (format[i] == 's')
 			{
 				s = va_arg(ap, char *);
-				res += write(1, s, ft_strlen(s));
+				if (s == NULL)
+					res += write(1, "(null)", 6);
+				else
+					res += write(1, s, ft_strlen(s));
 			}
 			if (format[i] == 'd')
 			{
@@ -85,18 +93,34 @@ int main(int ac, char **av)
 {
 	char *hello = "hello";
 	int	forty_two = 42;
+	int	max_int = 2147483647;
+	int	min_int = -2147483648;
 
+	printf("\n\ns flag\n");
 	printf("\t\t-real(%d)\n", printf("s:%s", hello));
 	printf("\t\t-mine(%d)\n", ft_printf("s:%s", hello));
+	printf("\t\t-real(%d)\n", printf("s:%s", NULL));
+	printf("\t\t-mine(%d)\n", ft_printf("s:%s", NULL));
+
+	printf("\n\nd flag\n");
+	printf("\t\t-real(%d)\n", printf("d:%d", forty_two));
+	printf("\t\t-mine(%d)\n", ft_printf("d:%d", forty_two));
 	printf("\t\t-real(%d)\n", printf("d:%d", -forty_two));
 	printf("\t\t-mine(%d)\n", ft_printf("d:%d", -forty_two));
+	printf("\t\t-real(%d)\n", printf("d:%d", max_int));
+	printf("\t\t-mine(%d)\n", ft_printf("d:%d", max_int));
+	printf("\t\t-real(%d)\n", printf("d:%d", min_int));
+	printf("\t\t-mine(%d)\n", ft_printf("d:%d", min_int));
+
+	printf("\n\nx flag\n");
 	printf("\t\t-real(%d)\n", printf("x:%x", forty_two));
 	printf("\t\t-mine(%d)\n", ft_printf("x:%x", forty_two));
 	printf("\t\t-real(%d)\n", printf("x:%x", -forty_two));
 	printf("\t\t-mine(%d)\n", ft_printf("x:%x", -forty_two));
 
 	//multi
-	printf("\t\tmulti-real(%d)\n", printf("s:%s d:%d x:%x", hello, forty_two, -forty_two));
-	printf("\t\tmulti-mine(%d)\n", ft_printf("s:%s d:%d x:%x", hello, forty_two, -forty_two));
+	printf("\n\nmulti flag\n");
+	printf("\t\t-real(%d)\n", printf("s:%s d:%d x:%x", hello, forty_two, -forty_two));
+	printf("\t\t-mine(%d)\n", ft_printf("s:%s d:%d x:%x", hello, forty_two, -forty_two));
 	return (0);
 }
