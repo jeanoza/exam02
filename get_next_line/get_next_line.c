@@ -6,7 +6,7 @@
 /*   By: kychoi <kychoi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 14:40:55 by kychoi            #+#    #+#             */
-/*   Updated: 2022/06/02 14:54:43 by kychoi           ###   ########.fr       */
+/*   Updated: 2022/06/02 15:00:24 by kychoi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,10 @@ int main(int ac, char **av)
 
     fd = open(av[1], O_RDONLY);
 
+    str = get_next_line(fd);
+    printf("res:%s\n", str);
+    str = get_next_line(fd);
+    printf("res:%s\n", str);
     str = get_next_line(fd);
     printf("res:%s\n", str);
     str = get_next_line(fd);
